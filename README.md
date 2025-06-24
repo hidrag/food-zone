@@ -1,6 +1,6 @@
--   This [🚀 FoodZone App 😍](https://foodfire-app.netlify.app/) is build from scratch using React.js and Vite.
+-   This [🚀 FoodZone App 😍](https://food-zone-aroy.vercel.app/) is build from scratch using React.js and Vite.
 
-Note: To Fix the `CORS` Issue in [FoodZone App](https://foodfire-app.netlify.app/), I have created [FoodZone Server](https://github.com/hidrag/food-zone-server) a GitHub Repository, which gives own server URL. For Instance: `https://food-zone-server.onrender.com`
+Note: To Fix the `CORS` Issue in [FoodZone App](https://food-zone-aroy.vercel.app/), I have created [FoodZone Server](https://github.com/hidrag/food-zone-server) a GitHub Repository, which gives own server URL. For Instance: `https://food-zone-server.onrender.com`
 
 ## 🔥 Clone this Repository
 
