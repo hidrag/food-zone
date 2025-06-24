@@ -11,7 +11,7 @@ const Title = () => (
 	<Link to='/'>
 		<img
 			className='logo'
-			src='../../logo.jpg'
+			src={foodZoneLogo}
 			alt='Food Zone'
 			title='Food Zone'
 		/>
