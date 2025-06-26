@@ -1858,7 +1858,7 @@ const RestaurantCard = (props) => {
 
 export default RestaurantCard */
 
-import { IMG_CDN_URL } from '../../public/common/constants'
+import { IMG_CDN_URL } from '../utils/constants'
 
 // Restaurant card component: Image, name, cuisine
 const RestaurantCard = ({

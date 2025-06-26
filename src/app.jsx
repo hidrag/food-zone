@@ -1,15 +1,17 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client'
 import Header from './Components/Header'
-import Body from './Components/Body'
+import Body from './Pages/Home'
 import Footer from './Components/Footer'
-import About from './Components/About'
+import About from './Pages/About'
 import Error from './Components/Error'
-import Contact from './Components/Contact'
+import Contact from './Pages/Contact'
 import Login from './Components/Login'
-import RestaurantMenu from './Components/RestaurantMenu'
-import Profile from './Components/Profile'
-import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom' // for routing our page import createBrowserRouter and RouterProvider for providing router & Outlet for children component for nested routing
+import RestaurantMenu from './Pages/RestaurantMenu'
+import Profile from './Pages/Profile'
+import Cart from './pages/Cart'
+import Checkout from './Pages/Checkout'
+import ThankYou from './Pages/ThankYou'
+import { createBrowserRouter, Outlet } from 'react-router-dom' // for routing our page import createBrowserRouter and RouterProvider for providing router & Outlet for children component for nested routing
 
 /* My Food App structure will look like this,
             1) Header
@@ -30,49 +32,38 @@ import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom' /
 */
 
 // AppLayout component to render: Header, Outlet(it contain children component like body, About, Restaurant Menu etc) and Footer Component
-const AppLayout = () => {
-	return (
-		<React.Fragment>
-			<div className='app'>
-				<Header />
+// Layout component
+// eslint-disable-next-line react-refresh/only-export-components
+const AppLayout = () => (
+	<div className='app'>
+		<div className='min-h-screen flex flex-col'>
+			<Header />
+			<main className='flex-grow'>
 				<Outlet />
-				<Footer />
-			</div>
-		</React.Fragment>
-	)
-}
+			</main>
+			<Footer />
+		</div>
+	</div>
+)
 
-// call createBrowserRouter for routing different pages
+// Router configuration
 const appRouter = createBrowserRouter([
 	{
-		path: '/', // show path for routing
-		element: <AppLayout />, // show component for particular path
-		errorElement: <Error />, // show error component for path is different
+		path: '/',
+		element: <AppLayout />,
+		errorElement: <Error />,
 		children: [
-			// show children component for routing
-			{
-				path: '/',
-				element: <Body />,
-			},
+			{ path: '/', element: <Body /> },
 			{
 				path: 'about',
 				element: <About />,
-				children: [
-					{
-						// nested routing
-						path: 'profile',
-						element: <Profile />,
-					},
-				],
+				children: [{ path: 'profile', element: <Profile /> }],
 			},
-			{
-				path: 'contact',
-				element: <Contact />,
-			},
-			{
-				path: 'restaurant/:resId',
-				element: <RestaurantMenu />,
-			},
+			{ path: 'contact', element: <Contact /> },
+			{ path: 'restaurant/:resId', element: <RestaurantMenu /> },
+			{ path: 'cart', element: <Cart /> },
+			{ path: '/checkout', element: <Checkout /> },
+			{ path: '/thank-you', element: <ThankYou /> },
 		],
 	},
 	{
@@ -80,5 +71,5 @@ const appRouter = createBrowserRouter([
 		element: <Login />,
 	},
 ])
-const root = ReactDOM.createRoot(document.getElementById('root'))
-root.render(<RouterProvider router={appRouter} />) // render RouterProvider and use router as props and pass value appRouter
+
+export default appRouter

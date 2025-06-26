@@ -1,101 +1,89 @@
-import foodZoneLogo from '../assets/img/logo.jpg' // imported foodZoneLogo from assets folder
-import { Link } from 'react-router-dom' // imported Link for client side routing
-import { useNavigate } from 'react-router-dom'
+import foodZoneLogo from '../assets/img/logo.jpg'
+import { Link, useNavigate } from 'react-router-dom'
 import useOnline from '../Hooks/useOnline'
 import useAuth from '../Hooks/useAuth'
 import useLocalStorage from '../Hooks/useLocalStorage'
 import { useEffect } from 'react'
 
-// Title component for display logo
 const Title = () => (
 	<Link to='/'>
 		<img
-			className='logo'
 			src={foodZoneLogo}
 			alt='Food Zone'
 			title='Food Zone'
+			className='w-14'
 		/>
 	</Link>
 )
 
-// Header component for header section: Logo, Nav Items
 const Header = () => {
 	const navigate = useNavigate()
-
-	// call custom hook useLocalStorage for getting localStorage value of user
 	const [getLocalStorage, , clearLocalStorage] = useLocalStorage('user')
-
-	// call custom hook useAuth for user is loggedin or not
 	const [isLoggedin, setIsLoggedin] = useAuth()
+	const isOnline = useOnline()
 
 	useEffect(() => {
-		// if value of getLocalStorage is equal to null setIsLoggedin to false
 		if (getLocalStorage === null) {
 			setIsLoggedin(false)
 		}
 	}, [getLocalStorage])
 
-	// call custom hook useOnline if user is online or not
-	const isOnline = useOnline()
-
 	return (
-		<div className='header'>
-			<Title />
-
-			{/* if user is logged in then display userName */}
-			{isLoggedin && (
-				<div className='user-name'>Hi {getLocalStorage?.userName}!</div>
-			)}
-
-			<div className='nav-items'>
-				<ul>
+		<div className='w-full shadow-md bg-white'>
+			<div className='flex justify-between items-center px-4 py-2'>
+				<Title />
+				<ul className='flex gap-4 items-center text-sm font-medium'>
 					<li>
-						<Link to='/'>Home</Link>
+						<Link
+							to='/'
+							className='text-blue-600 hover:text-blue-800 transition'>
+							Home
+						</Link>
 					</li>
 					<li>
-						<Link to='/about'>About</Link>
+						<Link
+							to='/about'
+							className='text-blue-600 hover:text-blue-800 transition'>
+							About
+						</Link>
 					</li>
-
 					<li>
-						<Link to='/contact'>Contact</Link>
+						<Link
+							to='/contact'
+							className='text-blue-600 hover:text-blue-800 transition'>
+							Contact
+						</Link>
 					</li>
-					{/* <li>
-						<i className='fa-solid fa-cart-shopping'></i>
-					</li> */}
 					<li>
-						{/* use conditional rendering for login and logout */}
+						<Link
+							to='/cart'
+							className='text-blue-600 hover:text-blue-800 text-lg'>
+							<i className='fa-solid fa-cart-shopping'></i>
+						</Link>
+					</li>
+					<li>
 						{isLoggedin ? (
 							<button
-								className='logout-btn'
 								onClick={() => {
 									clearLocalStorage()
 									setIsLoggedin(false)
-								}}>
+								}}
+								className='text-gray-800 font-semibold hover:text-red-600 flex items-center gap-1'>
 								Logout
 								<span
-									className={
-										isOnline
-											? 'login-btn-green'
-											: 'login-btn-red'
-									}>
-									{' '}
-									●
-								</span>
+									className={`w-2 h-2 rounded-full ${
+										isOnline ? 'bg-green-500' : 'bg-red-500'
+									}`}></span>
 							</button>
 						) : (
 							<button
-								className='login-btn'
-								onClick={() => navigate('/login')}>
+								onClick={() => navigate('/login')}
+								className='text-gray-800 font-semibold hover:text-green-600 flex items-center gap-1'>
 								Login
 								<span
-									className={
-										isOnline
-											? 'login-btn-green'
-											: 'login-btn-red'
-									}>
-									{' '}
-									●
-								</span>
+									className={`w-2 h-2 rounded-full ${
+										isOnline ? 'bg-green-500' : 'bg-red-500'
+									}`}></span>
 							</button>
 						)}
 					</li>

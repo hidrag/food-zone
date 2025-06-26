@@ -1,10 +1,18 @@
+import React from 'react'
+import ReactDOM from 'react-dom/client'
 import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { RouterProvider } from 'react-router-dom'
+import { CartProvider } from './Context/CartContext'
+import appRouter from './App' // ✅ make sure this path is correct
 import './index.css'
-import App from './App.jsx'
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
+const root = ReactDOM.createRoot(document.getElementById('root'))
+
+root.render(
+	<React.StrictMode>
+		<CartProvider>
+			{/* Wrapping the RouterProvider with CartProvider to provide cart context to all components */}
+			<RouterProvider router={appRouter} />
+		</CartProvider>
+	</React.StrictMode>
 )

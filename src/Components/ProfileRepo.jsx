@@ -3,8 +3,9 @@ import {
 	Github_API_User,
 	Github_UserName,
 	Github_Repository_Name,
+	// eslint-disable-next-line no-unused-vars
 	options,
-} from '../../public/common/constants'
+} from '../utils/constants'
 import { BiGitRepoForked, BiStar } from 'react-icons/bi'
 import { FiUsers } from 'react-icons/fi'
 
@@ -26,8 +27,9 @@ class ProfileRepoClass extends Component {
 	}
 	render() {
 		const {
-			userInfo: { followers, html_url },
-			repoInfo: repoList,
+			// eslint-disable-next-line no-unused-vars
+			userInfo = { followers: 0, html_url: '#' },
+			repoInfo: repoList = [],
 		} = this.props // accessing userInfo and repoInfo as props from parent class `ProfileClass`
 
 		// console.log("ProfileRepoClass child render");
@@ -52,11 +54,13 @@ class ProfileRepoClass extends Component {
 								<div className='profile-repo-items'>
 									<h3>
 										<a
-											href={html_url}
+											href={repo.html_url}
 											target='_blank'
 											rel='noopener noreferrer'>
 											<FiUsers />
-											<span>{followers} Followers</span>
+											<span>
+												{repo.followers} Followers
+											</span>
 										</a>
 									</h3>
 									<h3>
