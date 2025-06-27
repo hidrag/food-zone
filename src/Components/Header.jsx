@@ -1,9 +1,10 @@
 import foodZoneLogo from '../assets/img/logo.jpg'
-import { Link, useNavigate } from 'react-router-dom'
-import useOnline from '../Hooks/useOnline'
-import useAuth from '../Hooks/useAuth'
-import useLocalStorage from '../Hooks/useLocalStorage'
-import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
+//import useOnline from '../Hooks/useOnline'
+//import useAuth from '../Hooks/useAuth'
+//import useLocalStorage from '../Hooks/useLocalStorage'
+//import { useEffect } from 'react'
+import { useAuth } from '../context/AuthContext'
 
 const Title = () => (
 	<Link to='/'>
@@ -17,21 +18,28 @@ const Title = () => (
 )
 
 const Header = () => {
-	const navigate = useNavigate()
-	const [getLocalStorage, , clearLocalStorage] = useLocalStorage('user')
-	const [isLoggedin, setIsLoggedin] = useAuth()
-	const isOnline = useOnline()
+	//const navigate = useNavigate()
+	//const [getLocalStorage, , clearLocalStorage] = useLocalStorage('user')
+	//const [isLoggedin, setIsLoggedin] = useAuth()
+	//const isOnline = useOnline()
+	const { user, logout } = useAuth()
 
-	useEffect(() => {
+	/* useEffect(() => {
 		if (getLocalStorage === null) {
 			setIsLoggedin(false)
 		}
-	}, [getLocalStorage])
+	}, [getLocalStorage]) */
 
 	return (
 		<div className='w-full shadow-md bg-white'>
 			<div className='flex justify-between items-center px-4 py-2'>
 				<Title />
+				{user && (
+					<div className='user-name text-sm text-gray-700'>
+						Welcome,{' '}
+						<span className='font-semibold'>{user.name}</span>!
+					</div>
+				)}
 				<ul className='flex gap-4 items-center text-sm font-medium'>
 					<li>
 						<Link
@@ -61,8 +69,13 @@ const Header = () => {
 							<i className='fa-solid fa-cart-shopping'></i>
 						</Link>
 					</li>
+					{user && (
+						<li>
+							<Link to='/orders'>Orders</Link>
+						</li>
+					)}
 					<li>
-						{isLoggedin ? (
+						{/* {isLoggedin ? (
 							<button
 								onClick={() => {
 									clearLocalStorage()
@@ -85,6 +98,11 @@ const Header = () => {
 										isOnline ? 'bg-green-500' : 'bg-red-500'
 									}`}></span>
 							</button>
+						)} */}
+						{user ? (
+							<button onClick={logout}>Logout</button>
+						) : (
+							<Link to='/login'>Login</Link>
 						)}
 					</li>
 				</ul>

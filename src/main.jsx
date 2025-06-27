@@ -4,15 +4,18 @@ import { StrictMode } from 'react'
 import { RouterProvider } from 'react-router-dom'
 import { CartProvider } from './Context/CartContext'
 import appRouter from './App' // ✅ make sure this path is correct
+import { AuthProvider } from './context/AuthContext'
 import './index.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
 root.render(
 	<React.StrictMode>
-		<CartProvider>
-			{/* Wrapping the RouterProvider with CartProvider to provide cart context to all components */}
-			<RouterProvider router={appRouter} />
-		</CartProvider>
+		<AuthProvider>
+			<CartProvider>
+				{/* Wrapping the RouterProvider with CartProvider to provide cart context to all components */}
+				<RouterProvider router={appRouter} />
+			</CartProvider>
+		</AuthProvider>
 	</React.StrictMode>
 )

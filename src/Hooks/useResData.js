@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-
+// eslint-disable-next-line no-unused-vars
+import axios from 'axios'
 const useResData = (API_URL) => {
 	const [allRestaurants, setAllRestaurants] = useState([])
 	const [filteredRestaurants, setFilteredRestaurants] = useState([])
@@ -51,3 +52,60 @@ const useResData = (API_URL) => {
 }
 
 export default useResData
+
+/* import { useEffect, useState } from 'react'
+import axios from 'axios'
+
+const useResData = (lat, lng) => {
+	const [allRestaurants, setAllRestaurants] = useState([])
+	const [filteredRestaurants, setFilteredRestaurants] = useState(null)
+	const [loading, setLoading] = useState(true)
+
+	useEffect(() => {
+		if (!lat || !lng) return
+
+		const fetchData = async () => {
+			try {
+				setLoading(true)
+				const response = await axios.get('/api/restaurants', {
+					params: {
+						lat,
+						lng,
+						page_type: 'DESKTOP_WEB_LISTING',
+					},
+				})
+
+				const cards = response.data?.data?.cards || []
+
+				const restaurantCard = cards.find(
+					(card) =>
+						card.card?.card?.['@type'] ===
+						'type.googleapis.com/swiggy.presentation.food.v2.RestaurantGridListing'
+				)
+
+				const restaurants =
+					restaurantCard?.card?.card?.restaurants || []
+
+				setAllRestaurants(restaurants)
+				setFilteredRestaurants(null)
+			} catch (error) {
+				console.error('Failed to fetch restaurants:', error)
+				setAllRestaurants([])
+			} finally {
+				setLoading(false)
+			}
+		}
+
+		fetchData()
+	}, [lat, lng])
+
+	return [
+		allRestaurants,
+		filteredRestaurants,
+		loading,
+		setFilteredRestaurants,
+	]
+}
+
+export default useResData
+ */

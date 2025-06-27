@@ -2,11 +2,15 @@ import React, { useState } from 'react'
 import { useCart } from '../Context/CartContext'
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
+import axios from '../utils/axiosInstance'
+import { useAuth } from '../Context/AuthContext'
 
 const Checkout = () => {
 	const { cart, totalItems, totalPrice, clearCart } = useCart()
 	const navigate = useNavigate()
+	const { user, token } = useAuth() // user._id should be available
 
+	console.log('User from context:', user)
 	useEffect(() => {
 		if (cart.length === 0) {
 			navigate('/cart')
@@ -27,7 +31,7 @@ const Checkout = () => {
 		setFormData({ ...formData, [e.target.name]: e.target.value })
 	}
 
-	const handleSubmit = (e) => {
+	/* const handleSubmit = (e) => {
 		e.preventDefault()
 
 		if (
@@ -53,6 +57,96 @@ const Checkout = () => {
 				navigate('/thank-you')
 			}, 2000)
 		}, 3000)
+	} */
+
+	const handleSubmit = async (e) => {
+		e.preventDefault()
+
+		if (
+			!formData.name ||
+			!formData.email ||
+			!formData.phone ||
+			!formData.address
+		) {
+			alert('Please fill in all fields')
+			return
+		}
+
+		setLoading(true)
+		setPaymentStatus('Processing Payment...')
+
+		/* try {
+			// Simulate payment delay
+			await new Promise((resolve) => setTimeout(resolve, 3000))
+
+			// Prepare order data
+			const orderData = {
+				user: user._id, // must be sent
+				items: cart.map((item) => ({
+					id: item.id,
+					name: item.name,
+					price: item.price,
+					quantity: item.quantity,
+					imageId: item.imageId || '',
+				})),
+				totalAmount: totalPrice,
+				location: formData.address, // or get from geolocation later
+			}
+
+			// Send order to backend
+			const response = await axios.post(
+				'http://localhost:5050/api/orders',
+				orderData,
+				{
+					headers: {
+						Authorization: `Bearer ${user.token}`, // if using token auth
+					},
+				}
+			)
+
+			setPaymentStatus('Payment Successful ✅')
+			clearCart()
+
+			// Store order ID or summary to localStorage or state before redirect
+			localStorage.setItem('lastOrder', JSON.stringify(response.data))
+
+			setTimeout(() => {
+				navigate('/thank-you')
+			}, 2000)
+		} catch (error) {
+			console.error('Order failed:', error)
+			setPaymentStatus('Payment Failed ❌')
+			setLoading(false)
+		} */
+
+		try {
+			// Simulate payment delay
+			setTimeout(async () => {
+				const orderPayload = {
+					user: user._id, // must be sent
+					items: cart,
+					totalAmount: totalPrice,
+					location: formData.address,
+				}
+
+				const res = await axios.post('/orders', orderPayload, {
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				})
+
+				setPaymentStatus('Payment Successful ✅')
+				clearCart()
+
+				setTimeout(() => {
+					navigate(`/thank-you?orderId=${res.data._id}`)
+				}, 2000)
+			}, 3000)
+		} catch (error) {
+			console.error('Order failed:', error)
+			alert('Failed to place order.')
+			setLoading(false)
+		}
 	}
 
 	return (

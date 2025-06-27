@@ -11,7 +11,12 @@ import Profile from './Pages/Profile'
 import Cart from './pages/Cart'
 import Checkout from './Pages/Checkout'
 import ThankYou from './Pages/ThankYou'
-import { createBrowserRouter, Outlet } from 'react-router-dom' // for routing our page import createBrowserRouter and RouterProvider for providing router & Outlet for children component for nested routing
+import OrderHistory from './Pages/OrderHistory'
+import { createBrowserRouter, Outlet } from 'react-router-dom'
+import ProtectedRoute from './components/ProtectedRoute'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+// for routing our page import createBrowserRouter and RouterProvider for providing router & Outlet for children component for nested routing
 
 /* My Food App structure will look like this,
             1) Header
@@ -40,6 +45,10 @@ const AppLayout = () => (
 			<Header />
 			<main className='flex-grow'>
 				<Outlet />
+				<ToastContainer
+					position='top-center'
+					autoClose={2000}
+				/>
 			</main>
 			<Footer />
 		</div>
@@ -62,8 +71,23 @@ const appRouter = createBrowserRouter([
 			{ path: 'contact', element: <Contact /> },
 			{ path: 'restaurant/:resId', element: <RestaurantMenu /> },
 			{ path: 'cart', element: <Cart /> },
-			{ path: '/checkout', element: <Checkout /> },
-			{ path: '/thank-you', element: <ThankYou /> },
+			{
+				path: 'checkout',
+				element: (
+					<ProtectedRoute>
+						<Checkout />
+					</ProtectedRoute>
+				),
+			},
+			{ path: 'thank-you', element: <ThankYou /> },
+			{
+				path: 'orders',
+				element: (
+					<ProtectedRoute>
+						<OrderHistory />
+					</ProtectedRoute>
+				),
+			},
 		],
 	},
 	{
@@ -71,5 +95,4 @@ const appRouter = createBrowserRouter([
 		element: <Login />,
 	},
 ])
-
 export default appRouter
