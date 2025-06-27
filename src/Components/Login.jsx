@@ -3,7 +3,7 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext' // adjust path if needed
+import { useAuth } from '../Context/AuthContext' // adjust path if needed
 
 const Login = () => {
 	const [isSignup, setIsSignup] = useState(false)
