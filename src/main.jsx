@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { StrictMode } from 'react'
 import { RouterProvider } from 'react-router-dom'
 import { CartProvider } from './Context/CartContext'
-import appRouter from './App' // ✅ make sure this path is correct
+import appRouter from './app.jsx' // ✅ make sure this path is correct
 import { AuthProvider } from './context/AuthContext'
 import './index.css'
 
