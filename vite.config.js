@@ -7,7 +7,11 @@ export default defineConfig({
 	server: {
 		proxy: {
 			/* '/api': 'http://localhost:5050', */
-			'/api': 'https://food-zone-server-dev.onrender.com/',
+			'/api': {
+				target: 'https://food-zone-server-dev.onrender.com/',
+				changeOrigin: true,
+				secure: false,
+			},
 		},
 	},
 })
