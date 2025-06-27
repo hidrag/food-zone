@@ -4,7 +4,7 @@ import { StrictMode } from 'react'
 import { RouterProvider } from 'react-router-dom'
 import { CartProvider } from './Context/CartContext'
 import appRouter from './app.jsx' // ✅ make sure this path is correct
-import { AuthProvider } from './context/AuthContext'
+import { AuthProvider } from './Context/AuthContext'
 import './index.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
