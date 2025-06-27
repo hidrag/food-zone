@@ -6,7 +6,8 @@ export default defineConfig({
 	plugins: [tailwindcss(), react()],
 	server: {
 		proxy: {
-			'/api': 'http://localhost:5050',
+			/* '/api': 'http://localhost:5050', */
+			'/api': 'https://food-zone-server-dev.onrender.com/',
 		},
 	},
 })
